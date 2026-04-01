@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>赛道通案 · 二奢行业知识库</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --black: #0d0d0d; --black2: #111; --card-bg: #1a1a1a; --card-border: #2a2a2a;
+  --gold: #c9a84c; --gold-light: #e8c96a; --gold-dim: rgba(201,168,76,0.13);
+  --gold-border: rgba(201,168,76,0.35); --text: #f0e6d3; --text-dim: #a89880; --text-muted: #6b5e50;
+}
+html { scroll-behavior: smooth; }
+body { font-family: "PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif; background: #0f0f0f; color: var(--text); min-height: 100vh; }
+.topbar { background: #111; border-bottom: 1px solid var(--gold-border); height: 48px; display: flex; align-items: center; padding: 0 32px; gap: 14px; position: sticky; top: 0; z-index: 50; }
+.back-btn { display: flex; align-items: center; gap: 6px; text-decoration: none; color: var(--text-dim); font-size: 13px; transition: color .15s; }
+.back-btn:hover { color: var(--gold); }
+.sep { color: var(--text-muted); }
+.topbar-cur { color: var(--gold); font-size: 13px; font-weight: 600; }
+.topbar-right { margin-left: auto; font-size: 12px; color: var(--text-muted); }
+.banner { background: linear-gradient(135deg, #0a1020 0%, #121c30 40%, #0a1020 100%); border-bottom: 1px solid var(--gold-border); padding: 40px 48px 36px; position: relative; overflow: hidden; }
+.banner::before { content: ''; position: absolute; right: -60px; top: -60px; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%); pointer-events: none; }
+.banner-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--gold-dim); border: 1px solid var(--gold-border); color: var(--gold); font-size: 11px; padding: 3px 10px; border-radius: 4px; margin-bottom: 14px; letter-spacing: 0.5px; }
+.banner h1 { font-size: 28px; font-weight: 700; letter-spacing: 1px; background: linear-gradient(135deg, #f0e6d3 0%, var(--gold-light) 60%, #f0e6d3 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 10px; }
+.banner-desc { font-size: 14px; color: var(--text-dim); line-height: 1.7; max-width: 520px; margin-bottom: 28px; }
+.banner-stats { display: flex; gap: 32px; }
+.stat-num { font-size: 26px; font-weight: 700; color: var(--gold); line-height: 1; }
+.stat-label { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+.main { max-width: 1200px; margin: 0 auto; padding: 40px 32px 60px; }
+.section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
+.section-bar { width: 4px; height: 20px; background: var(--gold); border-radius: 2px; flex-shrink: 0; }
+.section-title { font-size: 17px; font-weight: 600; color: var(--text); }
+.section-count { background: var(--gold-dim); border: 1px solid var(--gold-border); color: var(--gold); font-size: 12px; padding: 2px 9px; border-radius: 4px; }
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+.doc-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 22px 22px 20px; display: flex; flex-direction: column; position: relative; overflow: hidden; transition: border-color .2s, transform .2s, box-shadow .2s; }
+.doc-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: 0; transition: opacity .2s; }
+.doc-card:hover { border-color: var(--gold-border); transform: translateY(-3px); box-shadow: 0 8px 28px rgba(201,168,76,0.1); }
+.doc-card:hover::before { opacity: 1; }
+.card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+.card-icon-title { display: flex; align-items: flex-start; gap: 10px; flex: 1; min-width: 0; }
+.card-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+.card-title { font-size: 15px; font-weight: 600; color: var(--text); line-height: 1.4; }
+.card-date { background: var(--gold-dim); border: 1px solid var(--gold-border); color: var(--gold); font-size: 11px; padding: 2px 8px; border-radius: 4px; flex-shrink: 0; white-space: nowrap; }
+.card-desc { font-size: 13px; color: var(--text-dim); line-height: 1.6; margin-bottom: 18px; flex: 1; }
+.card-btn { display: inline-flex; align-items: center; gap: 7px; background: var(--gold); color: #1a1208; font-size: 13px; font-weight: 600; padding: 8px 18px; border-radius: 7px; text-decoration: none; transition: background .15s, transform .1s; align-self: flex-start; }
+.card-btn:hover { background: var(--gold-light); transform: scale(1.02); }
+.card-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #111; }
+::-webkit-scrollbar-thumb { background: var(--gold-border); border-radius: 3px; }
+@media (max-width: 700px) { .banner { padding: 28px 20px 24px; } .main { padding: 28px 16px 40px; } .cards-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="back-btn" href="二奢知识库_v1.0.0.html">← 返回首页</a>
+  <span class="sep">/</span>
+  <span class="topbar-cur">📊 赛道通案</span>
+  <span class="topbar-right">二奢行业知识库 v1.0.0</span>
+</div>
+
+<div class="banner">
+  <div class="banner-tag">📊 赛道通案</div>
+  <h1>赛道通案</h1>
+  <p class="banner-desc">营销通案与核心人群洞察，涵盖二奢行业系统性营销策略、IP打法与投放技巧，助力精准触达目标人群。</p>
+  <div class="banner-stats">
+    <div class="stat"><div class="stat-num">4</div><div class="stat-label">收录文档</div></div>
+    <div class="stat"><div class="stat-num">2025</div><div class="stat-label">最新更新年份</div></div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="section-header">
+    <div class="section-bar"></div>
+    <div class="section-title">赛道通案目录</div>
+    <span class="section-count">共 4 份</span>
+  </div>
+  <div class="cards-grid">
+
+    <div class="doc-card">
+      <div class="card-top">
+        <div class="card-icon-title"><span class="card-icon">📄</span><span class="card-title">二奢行业营销指南</span></div>
+        <span class="card-date">2025.11</span>
+      </div>
+      <p class="card-desc">二奢赛道完整营销方法论，涵盖平台定位、核心人群画像、内容策略与投放路径，是新客入门必备通案。</p>
+      <a class="card-btn" href="https://drive.weixin.qq.com/s?k=ANAAyQcbAAgzyXGS1G" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>查看文档
+      </a>
+    </div>
+
+    <div class="doc-card">
+      <div class="card-top">
+        <div class="card-icon-title"><span class="card-icon">📄</span><span class="card-title">二奢行业营销新动向 + case沉淀</span></div>
+        <span class="card-date">2025.05</span>
+      </div>
+      <p class="card-desc">小红书商业动态视角下的二奢行业营销亮点策略梳理，含多个落地案例沉淀与内外宣内容整合。</p>
+      <a class="card-btn" href="https://docs.xiaohongshu.com/doc/5f3f3231d6ec34e5fb700e5c8a2214d0" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>查看文档
+      </a>
+    </div>
+
+    <div class="doc-card">
+      <div class="card-top">
+        <div class="card-icon-title"><span class="card-icon">📄</span><span class="card-title">二奢行业IP素材、人设 & 视频投放技巧总结</span></div>
+        <span class="card-date">2025.07</span>
+      </div>
+      <p class="card-desc">系统梳理二奢IP打造方法论，包含素材选取策略、账号人设设计与视频广告投放优化技巧。</p>
+      <a class="card-btn" href="https://doc.weixin.qq.com/doc/w3_AeYARQa-AOECNRAareBqvRCC2JdP0?scode=ANAAyQcbAAgrw7nJK0AcgAVgYcAFM" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>查看文档
+      </a>
+    </div>
+
+    <div class="doc-card">
+      <div class="card-top">
+        <div class="card-icon-title"><span class="card-icon">📄</span><span class="card-title">二奢原生广告数据 & 内容梳理</span></div>
+        <span class="card-date">2025.02</span>
+      </div>
+      <p class="card-desc">二奢赛道原生广告投放数据汇总与内容分析，帮助理解平台真实流量表现与内容优化方向。</p>
+      <a class="card-btn" href="https://docs.xiaohongshu.com/doc/a2a1b3bb6b4332f5b50b12f1ca866263" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>查看文档
+      </a>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
