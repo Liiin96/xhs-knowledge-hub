@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>行业范式 · 二奢行业知识库</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --black: #0d0d0d; --black2: #111; --card-bg: #1a1a1a; --card-border: #2a2a2a;
+  --gold: #c9a84c; --gold-light: #e8c96a; --gold-dim: rgba(201,168,76,0.13);
+  --gold-border: rgba(201,168,76,0.35); --text: #f0e6d3; --text-dim: #a89880; --text-muted: #6b5e50;
+}
+html { scroll-behavior: smooth; }
+body { font-family: "PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif; background: #0f0f0f; color: var(--text); min-height: 100vh; }
+.topbar { background: #111; border-bottom: 1px solid var(--gold-border); height: 48px; display: flex; align-items: center; padding: 0 32px; gap: 14px; position: sticky; top: 0; z-index: 50; }
+.back-btn { display: flex; align-items: center; gap: 6px; text-decoration: none; color: var(--text-dim); font-size: 13px; transition: color .15s; }
+.back-btn:hover { color: var(--gold); }
+.sep { color: var(--text-muted); }
+.topbar-cur { color: var(--gold); font-size: 13px; font-weight: 600; }
+.topbar-right { margin-left: auto; font-size: 12px; color: var(--text-muted); }
+.banner { background: linear-gradient(135deg, #150a0a 0%, #261010 40%, #150a0a 100%); border-bottom: 1px solid var(--gold-border); padding: 40px 48px 36px; position: relative; overflow: hidden; }
+.banner::before { content: ''; position: absolute; right: -60px; top: -60px; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%); pointer-events: none; }
+.banner-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--gold-dim); border: 1px solid var(--gold-border); color: var(--gold); font-size: 11px; padding: 3px 10px; border-radius: 4px; margin-bottom: 14px; letter-spacing: 0.5px; }
+.banner h1 { font-size: 28px; font-weight: 700; letter-spacing: 1px; background: linear-gradient(135deg, #f0e6d3 0%, var(--gold-light) 60%, #f0e6d3 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 10px; }
+.banner-desc { font-size: 14px; color: var(--text-dim); line-height: 1.7; max-width: 540px; margin-bottom: 28px; }
+.banner-stats { display: flex; gap: 32px; }
+.stat-num { font-size: 26px; font-weight: 700; color: var(--gold); line-height: 1; }
+.stat-label { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+.main { max-width: 1200px; margin: 0 auto; padding: 40px 32px 60px; }
+.section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
+.section-bar { width: 4px; height: 20px; background: var(--gold); border-radius: 2px; flex-shrink: 0; }
+.section-title { font-size: 17px; font-weight: 600; color: var(--text); }
+.section-count { background: var(--gold-dim); border: 1px solid var(--gold-border); color: var(--gold); font-size: 12px; padding: 2px 9px; border-radius: 4px; }
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+.doc-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 22px 22px 20px; display: flex; flex-direction: column; position: relative; overflow: hidden; transition: border-color .2s, transform .2s, box-shadow .2s; }
+.doc-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: 0; transition: opacity .2s; }
+.doc-card:hover { border-color: var(--gold-border); transform: translateY(-3px); box-shadow: 0 8px 28px rgba(201,168,76,0.1); }
+.doc-card:hover::before { opacity: 1; }
+.card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+.card-icon-title { display: flex; align-items: flex-start; gap: 10px; flex: 1; min-width: 0; }
+.card-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+.card-title { font-size: 15px; font-weight: 600; color: var(--text); line-height: 1.4; }
+.card-date { background: var(--gold-dim); border: 1px solid var(--gold-border); color: var(--gold); font-size: 11px; padding: 2px 8px; border-radius: 4px; flex-shrink: 0; white-space: nowrap; }
+.card-desc { font-size: 13px; color: var(--text-dim); line-height: 1.6; margin-bottom: 18px; flex: 1; }
+.card-btn { display: inline-flex; align-items: center; gap: 7px; background: var(--gold); color: #1a1208; font-size: 13px; font-weight: 600; padding: 8px 18px; border-radius: 7px; text-decoration: none; transition: background .15s, transform .1s; align-self: flex-start; }
+.card-btn:hover { background: var(--gold-light); transform: scale(1.02); }
+.card-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #111; }
+::-webkit-scrollbar-thumb { background: var(--gold-border); border-radius: 3px; }
+@media (max-width: 700px) { .banner { padding: 28px 20px 24px; } .main { padding: 28px 16px 40px; } .cards-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="back-btn" href="二奢知识库_v1.0.0.html">← 返回首页</a>
+  <span class="sep">/</span>
+  <span class="topbar-cur">🎯 行业范式</span>
+  <span class="topbar-right">二奢行业知识库 v1.0.0</span>
+</div>
+
+<div class="banner">
+  <div class="banner-tag">🎯 行业范式</div>
+  <h1>行业范式</h1>
+  <p class="banner-desc">头部客户方法论与新客必备军火库，沉淀闭环、BK撮合、种小草、深转等多种打法的实战案例，覆盖完整投放链路。</p>
+  <div class="banner-stats">
+    <div class="stat"><div class="stat-num">13</div><div class="stat-label">收录文档</div></div>
+    <div class="stat"><div class="stat-num">6+</div><div class="stat-label">案例类型</div></div>
+    <div class="stat"><div class="stat-num">2026</div><div class="stat-label">最新更新年份</div></div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="section-header">
+    <div class="section-bar"></div>
+    <div class="section-title">行业范式目录</div>
+    <span class="section-count">共 13 份</span>
+  </div>
+  <div class="cards-grid">
+
+    <div class="doc-card">
+      <div class="card-top">
+        <div class="card-icon-title"><span class="card-icon">🎬</span><span class="card-title">15分钟二奢投放入门</span></div>
+        <span class="card-date">2026.04</span>
+      </div>
+      <p class="card-desc">小红书视频课程，系统讲解二奢行业投放逻辑、账号搭建与内容策略，新手15分钟快速上手。</p>
+      <a class="card-btn" href="https://xue.xiaohongshu.com/course-detail/4456?lessonId=6108" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>查看文档
+      </a>
+    </div>
+
+    <div class="doc-card">
+      <div class="card-top">
+        <div class="card-icon-title"><span class="card-icon">📄</span><span class="card-title">【Ami二奢】闭环CASE</span></div>
+        <span class="card-date">2026.03</span>
+      </div>
+      <p class="card-desc">二奢主理人Ami的完整闭环投放案例，涵盖内容策略、直播配合与私域转化链路的全流程复盘。</p>
+      <a class="card-btn" href="https://docs.xiaohongshu.com/doc/6823294a87e1e56a569e12da7962e68a" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>查看文档
+      </a>
+    </div>
+
+    <div class="doc-card">
+      <div class="card-top">
+        <div class="card-icon-title"><span class="card-icon">📄</span><span class="card-title">【时尚博主小小莎老师】BK撮合CASE</span></div>
+        <span class="card-date">2026.03</span>
+      </div>
+      <p class="card-desc">明星买手与二奢商家联动的BK撮合案例，展示达人选品、内容共创与流量借势的完整操盘逻辑。</p>
+      <a class="card-btn" href="https://docs.xiaohongshu.com/doc/5d6981bc79ded9c93878b85cbd3b246b" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>查看文档
+      </a>
+    </div>
+
+    <div class="doc-card">
+      <div class="card-top">
+        <div class="card-icon-title"><span class="card-icon">📄</span><span class="card-title">【黄凯akai】种小草CASE</span></div>
+        <span class="card-date">2026.03</span>
+      </div>
+      <p class="card-desc">种小草链路的实操案例，通过达人内容种草实现高效获客，含人群定向、互动拐点等数据分析。</p>
+      <a class="card-btn" href="https://docs.xiaohongshu.com/doc/53d6b79c65175f609710d609253fa061" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>查看文档
+      </a>
+    </div>
+
+    <div class="doc-card">
+      <div class="card-top">
+        <div class="card-icon-title"><span class="card-icon">📄</span><span class="card-title">爱回收KFS案例 onepage</span></div>
+        <span class="card-date">2025.02</span>
+      </div>
+      <p class="card-desc">爱回收通过精准人群洞察调整KOL布局，从曝光转向精准转化。篇均种草人群提升165倍，留资率提升8.8倍。</p>
+      <a class="card-btn" href="https://docs.xiaohongshu.com/doc/723a7b0e88db736056f4ca666b7a5ab8" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>查看文档
+      </a>
+    </div>
+
+    <div class="doc-card">
+      <div class="card-top">
+        <div class="card-icon-title"><span class="card-icon">📄</span><span class="card-title">内容培训</span></div>
+        <span class="card-date">2026.04</span>
+      </div>
+      <p class="card-desc">二奢行业内容创作培训材料，覆盖笔记选题、拍摄技巧与投放配合，帮助团队快速提升内容生产能力。</p>
+      <a class="card-btn" href="https://doc.weixin.qq.com/pdf/d3_AegA5QbxAKMCNMr0hMa32RXWbfC89?scode=ANAAyQcbAAg4qZqWPYAeEA1gY1AKs" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>查看文档
+      </a>
+    </div>
+
+    <div class="doc-card">
+      <div class="card-top">
+        <div class="card-icon-title"><span class="card-icon">📄</span><span class="card-title">【阿米Ami二奢】种草大赏 + case onepage</span></div>
+        <span class="card-date">2025.06</span>
+      </div>
+      <p class="card-desc">阿米Ami乘风而起，实现闭环交易破亿战绩。种草大赏完整案例 + onepage文档整理，含乘风闭环完整链路。</p>
+      <a class="card-btn" href="https://docs.xiaohongshu.com/doc/4aa9e7b694d3871efa18f8a09f65df7b" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>查看文档
+      </a>
+    </div>
+
+    <div class="doc-card">
+      <div class="card-top">
+        <div class="card-icon-title"><span class="card-icon">📄</span><span class="card-title">【奢见-蛾子收包】深转CASE</span></div>
+        <span class="card-date">2025.02</span>
+      </div>
+      <p class="card-desc">深度转化链路的实操案例，展示从内容种草到私信留资的完整转化路径与效果数据。</p>
+      <a class="card-btn" href="https://docs.xiaohongshu.com/doc/a4facae47f63a6588b6fad61fdaac1b6" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>查看文档
+      </a>
+    </div>
+
+    <div class="doc-card">
+      <div class="card-top">
+        <div class="card-icon-title"><span class="card-icon">📄</span><span class="card-title">【必乐二奢】交易CASE</span></div>
+        <span class="card-date">2025.02</span>
+      </div>
+      <p class="card-desc">NPL链路下的二奢闭环交易案例，直播前笔记预热+群聊运营，单场直播支付GMV破600万。</p>
+      <a class="card-btn" href="https://docs.xiaohongshu.com/doc/29f6d4a9ffc0e2338902f0ef11180859" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>查看文档
+      </a>
+    </div>
+
+    <div class="doc-card">
+      <div class="card-top">
+        <div class="card-icon-title"><span class="card-icon">📄</span><span class="card-title">闭环新客场景 showcase · Ami直播大场</span></div>
+        <span class="card-date">2025.12</span>
+      </div>
+      <p class="card-desc">「预热+私域」转化新高、「广告拉新」销量突破，Ami直播大场闭环新客场景的完整showcase复盘。</p>
+      <a class="card-btn" href="https://docs.xiaohongshu.com/doc/c40272c74211f80300efdb082a0213e9" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>查看文档
+      </a>
+    </div>
+
+    <div class="doc-card">
+      <div class="card-top">
+        <div class="card-icon-title"><span class="card-icon">📄</span><span class="card-title">回收买卖赛道【种小草】互动量拐点探讨</span></div>
+        <span class="card-date">2025.11</span>
+      </div>
+      <p class="card-desc">种小草点赞分层对留资转化的拐点数据验证，覆盖二奢和黄金三级赛道，为投放决策提供数据依据。</p>
+      <a class="card-btn" href="https://docs.xiaohongshu.com/doc/80d6634d0d6049d926d83638a1379e93" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>查看文档
+      </a>
+    </div>
+
+    <div class="doc-card">
+      <div class="card-top">
+        <div class="card-icon-title"><span class="card-icon">📄</span><span class="card-title">二奢-回收赛道流量填充分析及后续策略</span></div>
+        <span class="card-date">2025.12</span>
+      </div>
+      <p class="card-desc">回收赛道搜索词流量填充现状分析，识别流量缺口与机会词，给出后续内容与投放补充策略建议。</p>
+      <a class="card-btn" href="https://docs.xiaohongshu.com/doc/83626074d43af9dd82945a15a144a11c" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>查看文档
+      </a>
+    </div>
+
+    <div class="doc-card">
+      <div class="card-top">
+        <div class="card-icon-title"><span class="card-icon">📄</span><span class="card-title">二奢-千帆推广新老客成交分层及策略</span></div>
+        <span class="card-date">2025.12</span>
+      </div>
+      <p class="card-desc">基于闭环客户数据的新老客分层分析，结合千帆推广工具，制定差异化的拉新与复购投放策略。</p>
+      <a class="card-btn" href="https://docs.xiaohongshu.com/doc/8c70a51c2adb390d717dee94efc098e7" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>查看文档
+      </a>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
