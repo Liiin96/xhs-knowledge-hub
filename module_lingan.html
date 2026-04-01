@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>行业灵感 · 二奢行业知识库</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --black: #0d0d0d; --black2: #111; --card-bg: #1a1a1a; --card-border: #2a2a2a;
+  --gold: #c9a84c; --gold-light: #e8c96a; --gold-dim: rgba(201,168,76,0.13);
+  --gold-border: rgba(201,168,76,0.35); --text: #f0e6d3; --text-dim: #a89880; --text-muted: #6b5e50;
+}
+html { scroll-behavior: smooth; }
+body { font-family: "PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif; background: #0f0f0f; color: var(--text); min-height: 100vh; }
+.topbar { background: #111; border-bottom: 1px solid var(--gold-border); height: 48px; display: flex; align-items: center; padding: 0 32px; gap: 14px; position: sticky; top: 0; z-index: 50; }
+.back-btn { display: flex; align-items: center; gap: 6px; text-decoration: none; color: var(--text-dim); font-size: 13px; transition: color .15s; }
+.back-btn:hover { color: var(--gold); }
+.sep { color: var(--text-muted); }
+.topbar-cur { color: var(--gold); font-size: 13px; font-weight: 600; }
+.topbar-right { margin-left: auto; font-size: 12px; color: var(--text-muted); }
+.banner { background: linear-gradient(135deg, #0e0e18 0%, #181820 40%, #0e0e18 100%); border-bottom: 1px solid var(--gold-border); padding: 40px 48px 36px; position: relative; overflow: hidden; }
+.banner::before { content: ''; position: absolute; right: -60px; top: -60px; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%); pointer-events: none; }
+.banner-tag { display: inline-flex; align-items: center; gap: 6px; background: var(--gold-dim); border: 1px solid var(--gold-border); color: var(--gold); font-size: 11px; padding: 3px 10px; border-radius: 4px; margin-bottom: 14px; letter-spacing: 0.5px; }
+.banner h1 { font-size: 28px; font-weight: 700; letter-spacing: 1px; background: linear-gradient(135deg, #f0e6d3 0%, var(--gold-light) 60%, #f0e6d3 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 10px; }
+.banner-desc { font-size: 14px; color: var(--text-dim); line-height: 1.7; max-width: 520px; margin-bottom: 28px; }
+.banner-stats { display: flex; gap: 32px; }
+.stat-num { font-size: 26px; font-weight: 700; color: var(--gold); line-height: 1; }
+.stat-label { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+.main { max-width: 1200px; margin: 0 auto; padding: 40px 32px 60px; }
+.section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
+.section-bar { width: 4px; height: 20px; background: var(--gold); border-radius: 2px; flex-shrink: 0; }
+.section-title { font-size: 17px; font-weight: 600; color: var(--text); }
+.section-count { background: var(--gold-dim); border: 1px solid var(--gold-border); color: var(--gold); font-size: 12px; padding: 2px 9px; border-radius: 4px; }
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+.doc-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 22px 22px 20px; display: flex; flex-direction: column; position: relative; overflow: hidden; transition: border-color .2s, transform .2s, box-shadow .2s; }
+.doc-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: 0; transition: opacity .2s; }
+.doc-card:hover { border-color: var(--gold-border); transform: translateY(-3px); box-shadow: 0 8px 28px rgba(201,168,76,0.1); }
+.doc-card:hover::before { opacity: 1; }
+.card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+.card-icon-title { display: flex; align-items: flex-start; gap: 10px; flex: 1; min-width: 0; }
+.card-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+.card-title { font-size: 15px; font-weight: 600; color: var(--text); line-height: 1.4; }
+.card-date { background: var(--gold-dim); border: 1px solid var(--gold-border); color: var(--gold); font-size: 11px; padding: 2px 8px; border-radius: 4px; flex-shrink: 0; white-space: nowrap; }
+.card-desc { font-size: 13px; color: var(--text-dim); line-height: 1.6; margin-bottom: 18px; flex: 1; }
+.card-btn { display: inline-flex; align-items: center; gap: 7px; background: var(--gold); color: #1a1208; font-size: 13px; font-weight: 600; padding: 8px 18px; border-radius: 7px; text-decoration: none; transition: background .15s, transform .1s; align-self: flex-start; }
+.card-btn:hover { background: var(--gold-light); transform: scale(1.02); }
+.card-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #111; }
+::-webkit-scrollbar-thumb { background: var(--gold-border); border-radius: 3px; }
+@media (max-width: 700px) { .banner { padding: 28px 20px 24px; } .main { padding: 28px 16px 40px; } .cards-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="back-btn" href="二奢知识库_v1.0.0.html">← 返回首页</a>
+  <span class="sep">/</span>
+  <span class="topbar-cur">✨ 行业灵感</span>
+  <span class="topbar-right">二奢行业知识库 v1.0.0</span>
+</div>
+
+<div class="banner">
+  <div class="banner-tag">✨ 行业灵感</div>
+  <h1>行业灵感</h1>
+  <p class="banner-desc">周度素材更新与分享，沉淀优质NPL投稿、直播大场showcase与行业标杆案例，持续为团队提供创作灵感。</p>
+  <div class="banner-stats">
+    <div class="stat"><div class="stat-num">3</div><div class="stat-label">收录文档</div></div>
+    <div class="stat"><div class="stat-num">每周</div><div class="stat-label">持续更新</div></div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="section-header">
+    <div class="section-bar"></div>
+    <div class="section-title">行业灵感目录</div>
+    <span class="section-count">共 7 份</span>
+  </div>
+  <div class="cards-grid">
+
+    <div class="doc-card">
+      <div class="card-top">
+        <div class="card-icon-title"><span class="card-icon">🤖</span><span class="card-title">AI版优质笔记抓取</span></div>
+        <span class="card-date">2026.04</span>
+      </div>
+      <p class="card-desc">利用AI技术批量抓取二奢行业优质笔记，提炼内容规律与爆款要素，为创作提供数据支撑与灵感来源。</p>
+      <a class="card-btn" href="https://docs.xiaohongshu.com/doc/760f56d2e7eab9c60a4d2a2ccf3018e3" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>查看文档
+      </a>
+    </div>
+
+    <div class="doc-card">
+      <div class="card-top">
+        <div class="card-icon-title"><span class="card-icon">📊</span><span class="card-title">黄金素材分享 Y26M2</span></div>
+        <span class="card-date">2026.02</span>
+      </div>
+      <p class="card-desc">2026年2月黄金赛道优质内容素材合集，含爆款笔记截图、达人内容案例与平台热门话题整理。</p>
+      <a class="card-btn" href="https://doc.weixin.qq.com/sheet/e3_AeEA1gY1AKsCN7tUVMmVXQtudduAU?scode=ANAAyQcbAAgmy1rCjrAeEA1gY1AKs&tab=BB08J2" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>查看文档
+      </a>
+    </div>
+
+    <div class="doc-card">
+      <div class="card-top">
+        <div class="card-icon-title"><span class="card-icon">📊</span><span class="card-title">二奢素材分享 Y26M2</span></div>
+        <span class="card-date">2026.02</span>
+      </div>
+      <p class="card-desc">2026年2月二奢赛道优质内容素材合集，涵盖热门笔记案例、选品方向与达人内容参考。</p>
+      <a class="card-btn" href="https://doc.weixin.qq.com/sheet/e3_AeEA1gY1AKsCNZaj064boRR0D2FaT?scode=ANAAyQcbAAgnvyQo3WAeEA1gY1AKs&tab=BB08J2" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>查看文档
+      </a>
+    </div>
+
+    <div class="doc-card">
+      <div class="card-top">
+        <div class="card-icon-title"><span class="card-icon">📊</span><span class="card-title">二奢素材分享 Y25M12</span></div>
+        <span class="card-date">2025.12</span>
+      </div>
+      <p class="card-desc">2025年12月二奢赛道内容素材周度分享，含年末节点热门内容规律与年货季选品参考。</p>
+      <a class="card-btn" href="https://doc.weixin.qq.com/sheet/e3_AeEA1gY1AKsCNnKWyIE4pRXuOf8Um?scode=ANAAyQcbAAgA3aWxT3AeEA1gY1AKs&tab=BB08J2" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>查看文档
+      </a>
+    </div>
+
+    <div class="doc-card">
+      <div class="card-top">
+        <div class="card-icon-title"><span class="card-icon">📄</span><span class="card-title">君君暖心收包 Ami Luxury · NPL投稿</span></div>
+        <span class="card-date">2025.01</span>
+      </div>
+      <p class="card-desc">直播前勤发笔记+群聊预热，持续积累群友量与直播预约量，单场直播支付GMV破600万。NPL优质投稿案例。</p>
+      <a class="card-btn" href="https://docs.xiaohongshu.com/doc/c4f7056e7fbb891b96feaebe6ddc289f" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>查看文档
+      </a>
+    </div>
+
+    <div class="doc-card">
+      <div class="card-top">
+        <div class="card-icon-title"><span class="card-icon">📄</span><span class="card-title">茉兰中古奢品 · NPL投稿</span></div>
+        <span class="card-date">2025.01</span>
+      </div>
+      <p class="card-desc">强化货盘心智特色+群聊分层运营体系，4个月GMV翻倍直达200万+。中古奢品赛道NPL优质标杆案例。</p>
+      <a class="card-btn" href="https://docs.xiaohongshu.com/doc/5802aed3f0360f8063db323a131c8f74" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>查看文档
+      </a>
+    </div>
+
+    <div class="doc-card">
+      <div class="card-top">
+        <div class="card-icon-title"><span class="card-icon">📄</span><span class="card-title">二奢主理人Ami直播大场 · 新客场景showcase</span></div>
+        <span class="card-date">2025.12</span>
+      </div>
+      <p class="card-desc">「预热+私域」转化新高，「广告拉新」销量突破。Ami直播大场的完整新客转化链路展示与数据复盘。</p>
+      <a class="card-btn" href="https://docs.xiaohongshu.com/doc/c40272c74211f80300efdb082a0213e9" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>查看文档
+      </a>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
